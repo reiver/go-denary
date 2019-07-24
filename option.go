@@ -109,6 +109,16 @@ func something(value string) Option {
 	}
 }
 
+// Else defaults this ‘denary.Option’ to ‘value’ if this ‘denary.Option’ has a value of ‘denary.Nothing()’,
+// else it just returns itself as is.
+func (receiver Option) Else(value Type) Option {
+	if Nothing() == receiver {
+		return something(value.String())
+	}
+
+	return receiver
+}
+
 // Nullable returns the equivalent ‘denary.Nullable’ for this ‘denary.Option’.
 func (receiver Option) Nullable() Nullable {
 	if Nothing() == receiver {
