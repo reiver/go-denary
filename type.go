@@ -76,6 +76,10 @@ func (receiver Type) Option() Option {
 	return something(receiver.value)
 }
 
+func (receiver Type) Result() Result {
+	return someResult(receiver.value)
+}
+
 func (receiver Type) String() string {
 	return receiver.value
 }
