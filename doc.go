@@ -63,5 +63,12 @@ And:
 
 In that example we assigned the JSON string ‘"2.31"’ to ‘Purchase.Amount’.
 
+If you wanted to create a ‘Purchase.Amount’ literal, you could use ‘denary.Parse().NullError()’
+to do that:
+
+	purchase := Purchase{
+		MerchanName: "Super Mega Store",
+		Amount:      denary.Parse("13.21").NullError(),
+	}
 */
 package denary
