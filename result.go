@@ -14,6 +14,13 @@ func NoResult() Result {
 	return Result{}
 }
 
+func someResult(value string) Result {
+	return Result{
+		loaded: true,
+		value:  value,
+	}
+}
+
 func (receiver Result) Validate() error {
 	if NoResult() == receiver {
 		return errNoResult
