@@ -16,6 +16,15 @@ func something(value string) Option {
 	}
 }
 
+func (receiver Option) Nullable() Nullable {
+	if Nothing() == receiver {
+		var nothing Nullable
+		return nothing
+	}
+
+	return someNullable(receiver.value)
+}
+
 func (receiver Option) Result() Result {
 	if Nothing() == receiver {
 		return NoResult()
