@@ -1,6 +1,7 @@
 package denary
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strings"
@@ -37,6 +38,17 @@ func (receiver Nullable) GoString() string {
 	}
 
 	return fmt.Sprintf("denary.Parse(%q).NullError()", receiver.value)
+}
+
+func (receiver Nullable) MarshalJSON() ([]byte, error) {
+	if Nothing().Nullable() == receiver {
+		return nil, errNothing
+	}
+	if Null() == receiver {
+		return json.Marshal(nil)
+	}
+
+	return json.Marshal(receiver.value)
 }
 
 func (receiver Nullable) Return() (Type, error) {
