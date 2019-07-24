@@ -12,3 +12,15 @@ func Null() Nullable {
 		isnull: true,
 	}
 }
+
+func (receiver Nullable) Unwrap() (Type, bool) {
+	var nothing Nullable
+	if  nothing == receiver {
+		return Type{}, false
+	}
+	if Null() == receiver {
+		return Type{}, false
+	}
+
+	return Type{receiver.value}, true
+}
