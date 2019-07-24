@@ -13,6 +13,13 @@ func Null() Nullable {
 	}
 }
 
+func someNullable(value string) Nullable {
+	return Nullable{
+		loaded: true,
+		value:  value,
+	}
+}
+
 func (receiver Nullable) Unwrap() (Type, bool) {
 	var nothing Nullable
 	if  nothing == receiver {
