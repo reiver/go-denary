@@ -32,7 +32,7 @@ func Int32(n int32) Type {
 	}
 }
 
-func Int64(n int8) Type {
+func Int64(n int64) Type {
 	value := strconv.FormatInt(int64(n), 10)
 
 	return Type{
