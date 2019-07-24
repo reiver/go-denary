@@ -1,5 +1,21 @@
 package denary
 
+import (
+	"regexp"
+)
+
+var (
+	numericPattern *regexp.Regexp
+)
+
+func init() {
+	pattern, err := regexp.CompilePOSIX("(0|[1-9][0-9]*)")
+	if nil != err {
+		panic(err)
+	}
+	numericPattern = pattern
+}
+
 func Parse(src interface{}) Result {
 
 	switch casted := src.(type) {
@@ -29,6 +45,13 @@ func Parse(src interface{}) Result {
 		return someResult(Uint32(casted).String())
 	case uint64:
 		return someResult(Uint64(casted).String())
+
+	case string:
+		if !numericPattern.MatchString(casted) {
+			return Errorf("denary: %q is not a recognized number", casted)
+		}
+
+		return someResult(casted)
 
 	default:
 		return Errorf("denary: %T is an unsupported type", src)
