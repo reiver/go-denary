@@ -22,7 +22,7 @@ func someResult(value string) Result {
 }
 
 func (receiver Result) Return() (Type, error) {
-	if NoResult() == receiver {
+	if Nothing().Result() == receiver {
 		return Type{}, errNoResult
 	}
 	if receiver.errored() {
@@ -38,7 +38,7 @@ func (receiver Result) Validate() error {
 }
 
 func (receiver Result) Unwrap() (Type, bool) {
-	if NoResult() == receiver {
+	if Nothing().Result() == receiver {
 		return Type{}, false
 	}
 	if receiver.errored() {
