@@ -10,10 +10,6 @@ func (receiver Result) errored() bool {
 	return receiver.loaded && nil != receiver.err
 }
 
-func NoResult() Result {
-	return Result{}
-}
-
 func someResult(value string) Result {
 	return Result{
 		loaded: true,
