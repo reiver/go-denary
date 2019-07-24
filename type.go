@@ -1,6 +1,8 @@
 package denary
 
 import (
+	"fmt"
+	"math/big"
 	"strconv"
 )
 
@@ -70,6 +72,17 @@ func Uint64(n uint64) Type {
 	return Type{
 		value: value,
 	}
+}
+
+func (receiver Type) BigRat() (*big.Rat, error) {
+	var bigRat big.Rat
+
+	_, err := fmt.Sscan(receiver.value, &bigRat)
+	if nil != err {
+		return nil, err
+	}
+
+	return &bigRat, nil
 }
 
 func (receiver Type) Nullable() Nullable {
