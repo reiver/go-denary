@@ -3,6 +3,7 @@ package denary_test
 import (
 	"github.com/reiver/go-denary"
 
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -11,7 +12,59 @@ import (
 	"testing"
 )
 
-func TestParseString(t *testing.T) {
+func TestNullableUnmarshalJSONNull(t *testing.T) {
+
+	{
+		var actualNullable denary.Nullable
+
+		if expected, actual := denary.Nothing().Nullable(), actualNullable; expected != actual {
+			t.Errorf("The denary.Nullable actually had the value %#v, not the expected value of %#v", actual, expected)
+			return
+		}
+
+		var jsonString string = "null"
+
+		if err := json.Unmarshal([]byte(jsonString), &actualNullable); nil != err {
+			t.Errorf("Did not expect an error, for calling json.Unmarshal(), but actually got one: (%T) %q", err, err)
+			return
+		}
+		if expected, actual := denary.Null(), actualNullable; expected != actual {
+			t.Errorf("The denary.Nullable actually had the value %#v, not the expected value of %#v", actual, expected)
+			return
+		}
+	}
+
+	{
+		type MyStruct struct {
+			This string          `json:"this"`
+			That denary.Nullable `json:"that"`
+		}
+
+		var actualStruct MyStruct
+
+		if expected, actual := denary.Nothing().Nullable(), actualStruct.That; expected != actual {
+			t.Errorf("The denary.Nullable actually had the value %#v, not the expected value of %#v", actual, expected)
+			return
+		}
+
+		var jsonString string =
+`{
+	"this":"Hello world!",
+	"that":null
+}`
+
+		if err := json.Unmarshal([]byte(jsonString), &actualStruct); nil != err {
+			t.Errorf("Did not expect an error, for calling json.Unmarshal(), but actually got one: (%T) %q", err, err)
+			return
+		}
+		if expected, actual := denary.Null(), actualStruct.That; expected != actual {
+			t.Errorf("The denary.Nullable actually had the value %#v, not the expected value of %#v", actual, expected)
+			return
+		}
+	}
+}
+
+func TestNullableUnmarshalJSON(t *testing.T) {
 
 	tests := []struct{
 		Src      string
@@ -21,6 +74,7 @@ func TestParseString(t *testing.T) {
 			Src:      "-.8904",
 			Expected: "-.8904",
 		},
+
 
 
 
@@ -1295,15 +1349,82 @@ func TestParseString(t *testing.T) {
 		}
 	}
 
+	{
+		moreTests := []struct{
+			Src      string
+			Expected string
+		}{}
+
+		for i, test := range tests {
+
+			// We quote anything of the form .12345 , 12345. , -.12345 , 123,456,789
+			if strings.HasPrefix(test.Src, ".") || strings.HasSuffix(test.Src, ".") || strings.HasPrefix(test.Src, "-.") || strings.Contains(test.Src, ",") {
+				tests[i].Src = `"`+ test.Src +`"`
+				continue
+			}
+
+			anotherTest := struct{
+				Src      string
+				Expected string
+			}{
+				Src: `"`+ test.Src +`"`,
+				Expected: test.Expected,
+			}
+
+			moreTests = append(moreTests, anotherTest)
+		}
+
+		tests = append(tests, moreTests...)
+	}
+
 	for testNumber, test := range tests {
 
-		result := denary.Parse(test.Src)
+
+		{
+			var actualNullable denary.Nullable
+
+			if expected, actual := denary.Nothing().Nullable(), actualNullable; expected != actual {
+				t.Errorf("For test #%d, the denary.Nullable actually had the value %#v, not the expected value of %#v", testNumber, actual, expected)
+				continue
+			}
+
+			var jsonString string = test.Src
+
+			if err := json.Unmarshal([]byte(jsonString), &actualNullable); nil != err {
+				t.Errorf("For test #%d, did not expect an error, for calling json.Unmarshal(), but actually got one: (%T) %q", testNumber, err, err)
+				t.Log("SRC:...")
+				t.Log(test.Src)
+				t.Log("JSON:...")
+				t.Log(jsonString)
+				continue
+			}
+			{
+				actualValue, err := actualNullable.Return()
+				if nil != err {
+					t.Errorf("For test #%d, did not expect an error, for calling denary.Nullable.Return(), but actually got one: (%T) %q", testNumber, err, err)
+					continue
+				}
+				if expected, actual := test.Expected, actualValue.String(); expected != actual {
+					t.Errorf("For test #%d, the denary.Nullable did not have the value that was actually expected.", testNumber)
+					t.Errorf("EXPECTED: «%s»", expected)
+					t.Errorf("ACTUAL:   «%s»", actual)
+					continue
+				}
+			}
+		}
+
+
+/*
+		var actualNullable denary.Nullable
+
+
+		result := denary.Parse(src)
 
 		actualValue, ok := result.Unwrap()
 		if !ok {
 			err := result.Validate()
 			t.Errorf("For test #%d, could not unwrap the result (%t), because: (%T) %q", testNumber, ok, err, err)
-			t.Logf("SRC: «%s»", test.Src)
+			t.Logf("SRC: «%s»", src)
 			continue
 		}
 
@@ -1313,5 +1434,6 @@ func TestParseString(t *testing.T) {
 			t.Logf("ACTUAL:   %q", actual)
 			continue
 		}
+*/
 	}
 }
