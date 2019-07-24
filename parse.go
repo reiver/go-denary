@@ -9,7 +9,10 @@ var (
 )
 
 func init() {
-	pattern, err := regexp.CompilePOSIX("(0|[1-9][0-9]*)")
+	const number =  "-?(0|[1-9][0-9]*)(.[0-9]+)?"
+	const regex = "^"+ number +"$"
+
+	pattern, err := regexp.CompilePOSIX(regex)
 	if nil != err {
 		panic(err)
 	}
