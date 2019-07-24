@@ -4,6 +4,14 @@ func Parse(src interface{}) Result {
 
 	switch casted := src.(type) {
 
+	case Type:
+		return casted.Result()
+	case Option:
+		return casted.Result()
+	case Result:
+		var result Result = casted
+		return result
+
 	case int8:
 		return someResult(Int8(casted).String())
 	case int16:
