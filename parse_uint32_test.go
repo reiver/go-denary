@@ -225,6 +225,45 @@ func TestParseUint32(t *testing.T) {
 
 
 		{
+			Src:             uint32(2147483639),
+			Expected: denary.Uint32(2147483639),
+		},
+		{
+			Src:             uint32(2147483640),
+			Expected: denary.Uint32(2147483640),
+		},
+		{
+			Src:             uint32(2147483641),
+			Expected: denary.Uint32(2147483641),
+		},
+		{
+			Src:             uint32(2147483642),
+			Expected: denary.Uint32(2147483642),
+		},
+		{
+			Src:             uint32(2147483643),
+			Expected: denary.Uint32(2147483643),
+		},
+		{
+			Src:             uint32(2147483644),
+			Expected: denary.Uint32(2147483644),
+		},
+		{
+			Src:             uint32(2147483645),
+			Expected: denary.Uint32(2147483645),
+		},
+		{
+			Src:             uint32(2147483646),
+			Expected: denary.Uint32(2147483646),
+		},
+		{
+			Src:             uint32(2147483647),
+			Expected: denary.Uint32(2147483647),
+		},
+
+
+
+		{
 			Src:             uint32(3000000000),
 			Expected: denary.Uint32(3000000000),
 		},
