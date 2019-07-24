@@ -55,6 +55,9 @@ func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 	if nil == receiver {
 		return errNilReceiver
 	}
+	if nil == data {
+		return fmt.Errorf("denary: %#v is invalid JSON", data)
+	}
 
 	sliceHeader := (*reflect.SliceHeader)(unsafe.Pointer(&data))
 	stringHeader := reflect.StringHeader{Data: sliceHeader.Data, Len: sliceHeader.Len}
