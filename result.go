@@ -5,3 +5,8 @@ type Result struct {
 	err    error
 	loaded bool
 }
+
+func (receiver Result) errored() bool {
+	return receiver.loaded && nil != receiver.err
+}
+
