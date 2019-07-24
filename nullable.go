@@ -3,6 +3,7 @@ package denary
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"unsafe"
 )
 
@@ -59,10 +60,16 @@ func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 	stringHeader := reflect.StringHeader{Data: sliceHeader.Data, Len: sliceHeader.Len}
 	var str string = *(*string)(unsafe.Pointer(&stringHeader))
 
-	switch str {
-	case "null":
+	if 0 >= len(str) || `"` == str {
+		return fmt.Errorf("denary: %q is invalid JSON", data)
+	}
+
+	switch {
+	case "null" == str:
 		*receiver = Null()
 		return nil
+	case strings.HasPrefix(str, `"`) && strings.HasSuffix(str, `"`):
+		return receiver.UnmarshalJSON(data[1:len(data)-1])
 	default:
 		n, err := Parse(str).Return()
 		if nil != err {
