@@ -72,6 +72,10 @@ func Uint64(n uint64) Type {
 	}
 }
 
+func (receiver Type) Option() Option {
+	return something(receiver.value)
+}
+
 func (receiver Type) String() string {
 	return receiver.value
 }
