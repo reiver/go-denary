@@ -1,5 +1,9 @@
 package denary
 
+import (
+	"math/big"
+)
+
 // Option is an ‘option type’ for ‘denary.Type’.
 //
 // It can contain:
@@ -107,6 +111,14 @@ func something(value string) Option {
 		loaded: true,
 		value:  value,
 	}
+}
+
+func (receiver Option) BigRat() (*big.Rat, error) {
+	if Nothing() == receiver {
+		return nil, errNothing
+	}
+
+	return Type{receiver.value}.BigRat()
 }
 
 // Else defaults this ‘denary.Option’ to ‘value’ if this ‘denary.Option’ has a value of ‘denary.Nothing()’,
