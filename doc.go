@@ -18,5 +18,50 @@ So, for example, it could be used as:
 
 In this example, the ‘Purchase.Amount’ field is used to safely store a money amount.
 
+For this example, because ‘Purchase.Amount’ is a ‘denary.Nullable’, it can handle JSON values such as:
+
+	{
+		"merchant_name": "Food Is Us",
+		"amount": null,
+	}
+
+In that example we assigned the JSON ‘null’ to ‘Purchase.Amount’.
+
+And:
+
+	{
+		"merchant_name": "Food Is Us",
+		"amount": 14,
+	}
+
+In that example we assigned the JSON number ‘14’ to ‘Purchase.Amount’.
+
+And:
+
+	{
+		"merchant_name": "Food Is Us",
+		"amount": 2.31,
+	}
+
+In that example we assigned the JSON number ‘2.31’ to ‘Purchase.Amount’.
+
+And:
+
+	{
+		"merchant_name": "Food Is Us",
+		"amount": "14",
+	}
+
+In that example we assigned the JSON string ‘"14"’ to ‘Purchase.Amount’.
+
+And:
+
+	{
+		"merchant_name": "Food Is Us",
+		"amount": 2.31,
+	}
+
+In that example we assigned the JSON string ‘"2.31"’ to ‘Purchase.Amount’.
+
 */
 package denary
