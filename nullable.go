@@ -1,6 +1,7 @@
 package denary
 
 import (
+	"fmt"
 	"reflect"
 	"unsafe"
 )
@@ -23,6 +24,18 @@ func someNullable(value string) Nullable {
 		loaded: true,
 		value:  value,
 	}
+}
+
+func (receiver Nullable) GoString() string {
+	if Nothing().Nullable() == receiver {
+		return "denary.Nothing().Nullable()"
+	}
+
+	if Null() == receiver {
+		return "denary.Null()"
+	}
+
+	return fmt.Sprintf("denary.Parse(%q).NullError()", receiver.value)
 }
 
 func (receiver Nullable) Return() (Type, error) {
