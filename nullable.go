@@ -40,8 +40,7 @@ func (receiver Nullable) GoString() string {
 }
 
 func (receiver Nullable) Return() (Type, error) {
-	var nothing Nullable
-        if nothing == receiver {
+        if Nothing().Nullable() == receiver {
                 return Type{}, errNothing
         }
         if Null() == receiver {
@@ -85,8 +84,7 @@ func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 }
 
 func (receiver Nullable) Unwrap() (Type, bool) {
-	var nothing Nullable
-	if  nothing == receiver {
+	if Nothing().Nullable() == receiver {
 		return Type{}, false
 	}
 	if Null() == receiver {
