@@ -3,6 +3,7 @@ package denary
 import (
 	"encoding/json"
 	"fmt"
+	"math/big"
 	"reflect"
 	"strings"
 	"unsafe"
@@ -26,6 +27,17 @@ func someNullable(value string) Nullable {
 		loaded: true,
 		value:  value,
 	}
+}
+
+func (receiver Nullable) BigRat() (*big.Rat, error) {
+	if Nothing().Nullable() == receiver {
+		return nil, errNothing
+	}
+	if Null() == receiver {
+		return nil, errNull
+	}
+
+	return Type{receiver.value}.BigRat()
 }
 
 func (receiver Nullable) GoString() string {
