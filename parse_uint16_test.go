@@ -140,6 +140,45 @@ func TestParseUint16(t *testing.T) {
 
 
 		{
+			Src:             uint16(32759),
+			Expected: denary.Uint16(32759),
+		},
+		{
+			Src:             uint16(32760),
+			Expected: denary.Uint16(32760),
+		},
+		{
+			Src:             uint16(32761),
+			Expected: denary.Uint16(32761),
+		},
+		{
+			Src:             uint16(32762),
+			Expected: denary.Uint16(32762),
+		},
+		{
+			Src:             uint16(32763),
+			Expected: denary.Uint16(32763),
+		},
+		{
+			Src:             uint16(32764),
+			Expected: denary.Uint16(32764),
+		},
+		{
+			Src:             uint16(32765),
+			Expected: denary.Uint16(32765),
+		},
+		{
+			Src:             uint16(32766),
+			Expected: denary.Uint16(32766),
+		},
+		{
+			Src:             uint16(32767),
+			Expected: denary.Uint16(32767),
+		},
+
+
+
+		{
 			Src:             uint16(65528),
 			Expected: denary.Uint16(65528),
 		},
