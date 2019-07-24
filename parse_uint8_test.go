@@ -61,6 +61,45 @@ func TestParseUint8(t *testing.T) {
 
 
 		{
+			Src:             uint8(119),
+			Expected: denary.Uint8(119),
+		},
+		{
+			Src:             uint8(120),
+			Expected: denary.Uint8(120),
+		},
+		{
+			Src:             uint8(121),
+			Expected: denary.Uint8(121),
+		},
+		{
+			Src:             uint8(122),
+			Expected: denary.Uint8(122),
+		},
+		{
+			Src:             uint8(123),
+			Expected: denary.Uint8(123),
+		},
+		{
+			Src:             uint8(124),
+			Expected: denary.Uint8(124),
+		},
+		{
+			Src:             uint8(125),
+			Expected: denary.Uint8(125),
+		},
+		{
+			Src:             uint8(126),
+			Expected: denary.Uint8(126),
+		},
+		{
+			Src:             uint8(127),
+			Expected: denary.Uint8(127),
+		},
+
+
+
+		{
 			Src:             uint8(250),
 			Expected: denary.Uint8(250),
 		},
