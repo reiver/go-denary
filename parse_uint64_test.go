@@ -344,6 +344,38 @@ func TestParseUint64(t *testing.T) {
 
 
 		{
+			Src:             uint64(9223372036854775779),
+			Expected: denary.Uint64(9223372036854775779),
+		},
+		{
+			Src:             uint64(9223372036854775800),
+			Expected: denary.Uint64(9223372036854775800),
+		},
+		{
+			Src:             uint64(9223372036854775801),
+			Expected: denary.Uint64(9223372036854775801),
+		},
+		{
+			Src:             uint64(9223372036854775802),
+			Expected: denary.Uint64(9223372036854775802),
+		},
+		{
+			Src:             uint64(9223372036854775803),
+			Expected: denary.Uint64(9223372036854775803),
+		},
+		{
+			Src:             uint64(9223372036854775804),
+			Expected: denary.Uint64(9223372036854775804),
+		},
+		{
+			Src:             uint64(9223372036854775805),
+			Expected: denary.Uint64(9223372036854775805),
+		},
+		{
+			Src:             uint64(9223372036854775806),
+			Expected: denary.Uint64(9223372036854775806),
+		},
+		{
 			Src:             uint64(9223372036854775807),
 			Expected: denary.Uint64(9223372036854775807),
 		},
