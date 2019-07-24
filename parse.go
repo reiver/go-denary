@@ -9,7 +9,24 @@ var (
 )
 
 func init() {
-	const number =  "-?(0|[1-9][0-9]*)(.[0-9]+)?"
+	const zero    = "0"                     //         0
+	const zeroDot = "0\\."                  //         0.
+	const positiveInt    = "[1-9][0-9]*"    // ex: 12345
+	const positiveIntDot = "[1-9][0-9]*\\." // ex: 12345.
+	const fractional = "\\.[0-9]+"          // ex:      .6789
+	const maybeFractional = "("+ fractional +")?"
+	const number =  "-?" +"("+
+		zero + maybeFractional+
+		"|"+
+		positiveInt + maybeFractional+
+		"|"+
+		fractional+
+		"|"+
+		zeroDot+
+		"|"+
+		positiveIntDot+
+		")"
+
 	const regex = "^"+ number +"$"
 
 	pattern, err := regexp.CompilePOSIX(regex)
@@ -51,7 +68,7 @@ func Parse(src interface{}) Result {
 
 	case string:
 		if !numericPattern.MatchString(casted) {
-			return Errorf("denary: %q is not a recognized number", casted)
+			return Errorf("denary: «%s» is not a recognized number", casted)
 		}
 
 		return someResult(casted)
