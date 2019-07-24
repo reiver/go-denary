@@ -17,6 +17,17 @@ func someResult(value string) Result {
 	}
 }
 
+func (receiver Result) NullError() Nullable {
+        if Nothing().Result() == receiver {
+                return Nothing().Nullable()
+        }
+	if receiver.errored() {
+		return Null()
+	}
+
+	return Type{receiver.value}.Nullable()
+}
+
 func (receiver Result) Return() (Type, error) {
 	if Nothing().Result() == receiver {
 		return Type{}, errNoResult
