@@ -33,6 +33,14 @@ func (receiver Option) Result() Result {
 	return someResult(receiver.value)
 }
 
+func (receiver Option) Return() (Type, error) {
+	if Nothing() == receiver {
+		return Type{}, errNothing
+	}
+
+	return Type{receiver.value}, nil
+}
+
 func (receiver Option) Unwrap() (Type, bool) {
 	if Nothing() == receiver {
 		return Type{}, false
