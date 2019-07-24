@@ -8,3 +8,10 @@ type Option struct {
 func Nothing() Option {
 	return Option{}
 }
+
+func something(value string) Option {
+	return Option{
+		loaded: true,
+		value:  value,
+	}
+}
