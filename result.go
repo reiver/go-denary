@@ -21,15 +21,20 @@ func someResult(value string) Result {
 	}
 }
 
-func (receiver Result) Validate() error {
+func (receiver Result) Return() (Type, error) {
 	if NoResult() == receiver {
-		return errNoResult
+		return Type{}, errNoResult
 	}
 	if receiver.errored() {
-		return receiver.err
+		return Type{}, receiver.err
 	}
 
-	return nil
+	return Type{receiver.value}, nil
+}
+
+func (receiver Result) Validate() error {
+	_, err := receiver.Return()
+	return err
 }
 
 func (receiver Result) Unwrap() (Type, bool) {
