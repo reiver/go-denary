@@ -20,6 +20,18 @@ func someNullable(value string) Nullable {
 	}
 }
 
+func (receiver Nullable) Return() (Type, error) {
+	var nothing Nullable
+        if nothing == receiver {
+                return Type{}, errNothing
+        }
+        if Null() == receiver {
+                return Type{}, errNull
+        }
+
+        return Type{receiver.value}, nil
+}
+
 func (receiver Nullable) Unwrap() (Type, bool) {
 	var nothing Nullable
 	if  nothing == receiver {
