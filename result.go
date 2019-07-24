@@ -1,5 +1,10 @@
 package denary
 
+import (
+	"errors"
+	"fmt"
+)
+
 type Result struct {
 	value  string
 	err    error
@@ -15,6 +20,23 @@ func someResult(value string) Result {
 		loaded: true,
 		value:  value,
 	}
+}
+
+func Err(err error) Result {
+	return Result{
+		loaded: true,
+		err:    err,
+	}
+}
+
+func Error(errmsg string) Result {
+	err := errors.New(errmsg)
+	return Err(err)
+}
+
+func Errorf(format string, a ...interface{}) Result {
+	err := fmt.Errorf(format, a...)
+	return Err(err)
 }
 
 func (receiver Result) NullError() Nullable {
