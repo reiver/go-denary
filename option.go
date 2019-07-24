@@ -27,7 +27,7 @@ func (receiver Option) Nullable() Nullable {
 
 func (receiver Option) Result() Result {
 	if Nothing() == receiver {
-		return NoResult()
+		return Nothing().Result()
 	}
 
 	return someResult(receiver.value)
