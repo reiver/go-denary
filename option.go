@@ -16,6 +16,14 @@ func something(value string) Option {
 	}
 }
 
+func (receiver Option) Result() Result {
+	if Nothing() == receiver {
+		return NoResult()
+	}
+
+	return someResult(receiver.value)
+}
+
 func (receiver Option) Unwrap() (Type, bool) {
 	if Nothing() == receiver {
 		return Type{}, false
